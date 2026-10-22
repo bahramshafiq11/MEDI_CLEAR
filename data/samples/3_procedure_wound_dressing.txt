@@ -1,0 +1,9 @@
+Doctor: What happened to your hand?
+Patient: I cut it on a glass while washing dishes last night. It keeps bleeding a little.
+Doctor: Let me see. It's about two centimeters, not too deep, but it's open. When was your last tetanus shot?
+Patient: I don't remember, maybe ten years ago.
+Doctor: Then we'll give you a tetanus injection today. The wound needs two stitches. I'll clean it, put in the stitches and do a dressing.
+Patient: Will it hurt?
+Doctor: I'll numb it first. ... Okay, done. Two stitches and the dressing is on.
+Patient: Thank you.
+Doctor: Keep it dry. Take cefalexin 500 mg BD for five days and paracetamol 500 mg SOS for pain. Come back in seven days to get the stitches removed. If it gets red, swollen or you get a fever, come earlier.

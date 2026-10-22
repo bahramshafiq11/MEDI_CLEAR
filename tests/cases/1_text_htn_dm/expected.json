@@ -1,0 +1,24 @@
+{
+  "description": "Doctor uses abbreviations (HTN, DM, OD, BD, TDS PRN); new high BP diagnosis, known diabetic",
+  "codes_required": [
+    "I10",
+    "E11.9|E14.9"
+  ],
+  "codes_forbidden": [],
+  "bill_services": [
+    "CONS-NEW",
+    "TEST-BSR"
+  ],
+  "bill_total": 1700,
+  "medicines": [
+    "amlodipine",
+    "metformin",
+    "paracetamol"
+  ],
+  "allergies": [],
+  "tests_ordered": [
+    "hba1c",
+    "rft"
+  ],
+  "visit_type": "new"
+}

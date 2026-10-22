@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MediClear</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">✚</span> MediClear <small>conversation → notes → codes → bill</small></div>
+    <div id="status" class="status">Checking AI…</div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <button id="btn-new" class="btn primary block">+ New consultation</button>
+      <h3>History</h3>
+      <ul id="history" class="history"></ul>
+    </aside>
+
+    <main>
+      <!-- ============ NEW CONSULTATION ============ -->
+      <section id="view-new">
+        <h1>New consultation</h1>
+        <p class="muted">Upload a recording or video of the consultation, or paste a transcript.</p>
+
+        <form id="form-new" class="card">
+          <label>Patient name (optional)
+            <input id="patient-name" type="text" placeholder="e.g. Ali Khan">
+          </label>
+
+          <label class="drop" id="drop">
+            <input id="file" type="file" accept="audio/*,video/*,.txt">
+            <span id="drop-text"><b>Choose a recording or video</b> or drag it here<br>
+              <small>mp3, wav, m4a, mp4, mov, webm… or a .txt transcript</small></span>
+          </label>
+
+          <div class="or">or paste a transcript</div>
+
+          <div class="row">
+            <select id="sample-select"><option value="">Load a sample conversation…</option></select>
+          </div>
+          <textarea id="transcript" rows="10" placeholder="Paste the conversation here. Lines can start with &quot;Doctor:&quot; and &quot;Patient:&quot;, or not, and the AI will work out who is speaking."></textarea>
+
+          <label class="check"><input id="label-speakers" type="checkbox" checked> Work out who is speaking (doctor / patient)</label>
+
+          <button class="btn primary" type="submit" id="btn-process">Process consultation</button>
+          <p id="new-error" class="error hidden"></p>
+        </form>
+
+        <div id="processing" class="card processing hidden">
+          <div class="spinner"></div>
+          <div>
+            <b>Processing…</b>
+            <p class="muted">Transcribing, understanding the conversation, writing notes, coding and billing.
+              On a local AI model this can take 1–3 minutes.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ RESULT ============ -->
+      <section id="view-result" class="hidden">
+        <div class="result-head">
+          <div>
+            <input id="r-name" class="name-input" placeholder="Patient name">
+            <div class="muted" id="r-meta"></div>
+          </div>
+          <div class="actions">
+            <span id="r-status" class="badge"></span>
+            <button class="btn" id="btn-save">Save changes</button>
+            <button class="btn primary" id="btn-approve">Approve</button>
+            <button class="btn hidden" id="btn-reopen">Reopen</button>
+            <button class="btn" id="btn-print">Print bill</button>
+            <button class="btn danger" id="btn-delete">Delete</button>
+          </div>
+        </div>
+
+        <div id="r-warnings"></div>
+
+        <nav class="tabs" id="tabs">
+          <button data-tab="summary" class="active">Summary</button>
+          <button data-tab="conversation">Conversation</button>
+          <button data-tab="soap">SOAP note</button>
+          <button data-tab="simple">Simple view</button>
+          <button data-tab="codes">Codes</button>
+          <button data-tab="bill">Bill</button>
+        </nav>
+
+        <div class="tab" id="tab-summary"></div>
+        <div class="tab hidden" id="tab-conversation"></div>
+        <div class="tab hidden" id="tab-soap"></div>
+        <div class="tab hidden" id="tab-simple"></div>
+        <div class="tab hidden" id="tab-codes"></div>
+        <div class="tab hidden" id="tab-bill"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Printable bill (only shown when printing) -->
+  <div id="print-area"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

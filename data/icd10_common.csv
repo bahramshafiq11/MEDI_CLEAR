@@ -1,0 +1,58 @@
+code,description,synonyms
+I10,Essential (primary) hypertension,hypertension;htn;high blood pressure;high bp;bp high;raised bp;raised blood pressure;elevated blood pressure
+E11.9,Type 2 diabetes mellitus without complications,type 2 diabetes;type ii diabetes;t2dm;dm2;dm type 2;type 2 dm;niddm;adult onset diabetes
+E10.9,Type 1 diabetes mellitus without complications,type 1 diabetes;type i diabetes;t1dm;dm1;dm type 1;iddm;juvenile diabetes
+E14.9,Unspecified diabetes mellitus without complications,diabetes;diabetes mellitus;dm;sugar;sugar problem;high sugar;sugar disease;diabetic
+R50.9,"Fever, unspecified",fever;pyrexia;febrile;temperature;high temperature;feverish
+B34.9,"Viral infection, unspecified",viral infection;viral fever;viral illness;virus infection
+J00,Acute nasopharyngitis [common cold],common cold;cold;coryza;runny nose;nasopharyngitis
+J06.9,"Acute upper respiratory infection, unspecified",urti;upper respiratory infection;upper respiratory tract infection;respiratory infection
+J11.1,"Influenza with other respiratory manifestations, virus not identified",flu;influenza;flu like illness
+J02.9,"Acute pharyngitis, unspecified",pharyngitis;sore throat;throat infection
+J03.9,"Acute tonsillitis, unspecified",tonsillitis;tonsils infection;swollen tonsils
+J20.9,"Acute bronchitis, unspecified",bronchitis;acute bronchitis
+J18.9,"Pneumonia, unspecified organism",pneumonia;lung infection
+J45.9,"Asthma, unspecified",asthma;bronchial asthma;asthmatic;asthma attack;acute asthma;asthma exacerbation;wheezing attack
+J30.4,"Allergic rhinitis, unspecified",allergic rhinitis;hay fever;nasal allergy;dust allergy
+R05,Cough,cough;coughing;dry cough;productive cough
+R06.0,Dyspnoea,dyspnea;dyspnoea;shortness of breath;sob;breathlessness;difficulty breathing
+R07.4,"Chest pain, unspecified",chest pain;pain in chest
+I20.9,"Angina pectoris, unspecified",angina;angina pectoris
+I21.9,"Acute myocardial infarction, unspecified",myocardial infarction;mi;heart attack;ami
+R51,Headache,headache;head pain;cephalalgia;head ache
+G43.9,"Migraine, unspecified",migraine
+R42,Dizziness and giddiness,dizziness;giddiness;dizzy;giddy;lightheaded;light headed;vertigo
+R11,Nausea and vomiting,nausea;vomiting;vomit;nauseous;feeling sick
+R53,Malaise and fatigue,fatigue;tiredness;weakness;lethargy;malaise;tired all the time
+R63.0,Anorexia,loss of appetite;poor appetite;not eating;no appetite;decreased appetite
+A01.0,Typhoid fever,typhoid;typhoid fever;enteric fever
+A09,Diarrhoea and gastroenteritis of presumed infectious origin,gastroenteritis;diarrhea;diarrhoea;loose motions;loose stools;stomach infection;gastro
+B54,Unspecified malaria,malaria
+A90,Dengue fever [classical dengue],dengue;dengue fever
+K30,Dyspepsia,dyspepsia;indigestion;acidity;upset stomach
+K21.9,Gastro-oesophageal reflux disease without oesophagitis,gerd;reflux;acid reflux;gastroesophageal reflux
+K29.7,"Gastritis, unspecified",gastritis
+R12,Heartburn,heartburn;burning in chest after eating
+R10.4,Other and unspecified abdominal pain,abdominal pain;stomach pain;stomach ache;tummy ache;belly pain;pain in abdomen
+K59.0,Constipation,constipation;constipated
+N39.0,"Urinary tract infection, site not specified",uti;urinary tract infection;urine infection;urinary infection
+R30.0,Dysuria,dysuria;burning urination;painful urination;burning while passing urine
+D64.9,"Anaemia, unspecified",anemia;anaemia;low hemoglobin;low haemoglobin;low hb
+E03.9,"Hypothyroidism, unspecified",hypothyroidism;hypothyroid;low thyroid;underactive thyroid
+E78.5,"Hyperlipidaemia, unspecified",hyperlipidemia;hyperlipidaemia;high cholesterol;dyslipidemia;raised cholesterol
+E66.9,"Obesity, unspecified",obesity;obese
+M54.5,Low back pain,low back pain;back pain;lower back pain;lbp;lumbago
+M17.9,"Gonarthrosis, unspecified",knee osteoarthritis;osteoarthritis knee;oa knee;knee arthritis
+M79.1,Myalgia,myalgia;muscle pain;body aches;body ache
+L03.9,"Cellulitis, unspecified",cellulitis;skin infection
+T14.1,Open wound of unspecified body region,wound;open wound;cut;laceration
+S61.9,"Open wound of wrist and hand, part unspecified",cut on hand;hand cut;hand laceration;laceration of hand;hand wound;wound of hand;cut finger;finger cut;open wound of hand;hand injury;injury of hand;injured hand;cut on the hand;laceration hand
+R21,Rash and other nonspecific skin eruption,rash;skin rash
+L50.9,"Urticaria, unspecified",urticaria;hives
+H10.9,"Conjunctivitis, unspecified",conjunctivitis;pink eye;red eye infection
+H66.9,"Otitis media, unspecified",otitis media;ear infection;middle ear infection
+F41.9,"Anxiety disorder, unspecified",anxiety;anxiety disorder
+F32.9,"Depressive episode, unspecified",depression;depressive episode;low mood
+G47.0,Disorders of initiating and maintaining sleep,insomnia;sleeplessness;cannot sleep;trouble sleeping
+Z00.0,General medical examination,general checkup;routine checkup;medical checkup;general examination;check up
+Z34.9,"Supervision of normal pregnancy, unspecified",pregnancy checkup;antenatal visit;antenatal checkup;normal pregnancy

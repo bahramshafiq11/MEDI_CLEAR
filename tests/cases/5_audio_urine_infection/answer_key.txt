@@ -1,0 +1,14 @@
+What was said in the recording (use this to check MediClear's transcript):
+
+Doctor: Good afternoon. Please sit down. How can I help you?
+Patient: Doctor, for three days I have burning when I pass urine, and I have to go to the bathroom again and again.
+Doctor: Any fever, back pain, or blood in the urine?
+Patient: No fever. Just a little pain in the lower tummy.
+Doctor: Are you pregnant, or is there any chance you could be?
+Patient: No.
+Doctor: Any allergy to medicines?
+Patient: Yes, I am allergic to penicillin. I get a rash.
+Doctor: Thank you, that's important. Let's do a quick urine dipstick test here. It shows nitrites and white cells, so this is a urinary tract infection.
+Doctor: Because of your penicillin allergy, I will give you nitrofurantoin one hundred milligrams twice a day for five days. Take it after meals.
+Doctor: Drink plenty of water. If you get a fever or back pain, come back immediately. Otherwise no follow up is needed.
+Patient: Okay, thank you so much.

@@ -1,0 +1,20 @@
+{
+  "description": "Recording: urine infection, dipstick test in clinic, penicillin allergy",
+  "codes_required": [
+    "N39.0"
+  ],
+  "codes_forbidden": [],
+  "bill_services": [
+    "CONS-NEW",
+    "TEST-UDIP"
+  ],
+  "bill_total": 1800,
+  "medicines": [
+    "nitrofurantoin"
+  ],
+  "allergies": [
+    "penicillin"
+  ],
+  "tests_ordered": [],
+  "visit_type": "new"
+}

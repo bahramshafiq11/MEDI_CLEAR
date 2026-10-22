@@ -1,0 +1,19 @@
+{
+  "description": "Recording: asthma attack, nebulization given in clinic",
+  "codes_required": [
+    "J45.9"
+  ],
+  "codes_forbidden": [],
+  "bill_services": [
+    "CONS-NEW",
+    "PROC-NEB"
+  ],
+  "bill_total": 2100,
+  "medicines": [
+    "salbutamol",
+    "prednisolone"
+  ],
+  "allergies": [],
+  "tests_ordered": [],
+  "visit_type": "new"
+}

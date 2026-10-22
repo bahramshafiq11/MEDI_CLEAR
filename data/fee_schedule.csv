@@ -1,0 +1,12 @@
+service_code,service_name,keywords,price
+CONS-NEW,General consultation (new visit),consultation;new visit;first visit;checkup;check up;examination;visit,1500
+CONS-FU,Follow-up consultation,follow up;follow-up;followup;review visit;revisit,800
+PROC-ECG,ECG done in clinic,ecg;ekg;electrocardiogram,1000
+PROC-NEB,Nebulization,nebulization;nebulisation;nebulizer;nebuliser;neb,600
+PROC-INJ,Injection given in clinic,injection;im injection;iv injection;shot;jab,300
+PROC-IVD,IV drip / fluids,drip;iv fluids;iv drip;cannula;infusion,1500
+PROC-DRS,Wound dressing,dressing;wound dressing;bandage,700
+PROC-SUT,Stitches / suturing,stitches;sutures;suturing;stitch,2500
+TEST-BSR,Blood sugar test (glucometer),blood sugar test;sugar test;bsr;glucometer;finger prick;rbs;fbs,200
+TEST-UDIP,Urine dipstick test,urine dipstick;urine strip;dipstick,300
+INCLUDED,Included in consultation (no extra charge),bp check;blood pressure check;blood pressure measurement;bp measurement;pulse;temperature check;vitals;physical examination;history taking;counseling;counselling;advice;prescription;examination of;local anaesthesia;local anesthesia;numbing,0

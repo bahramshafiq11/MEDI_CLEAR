@@ -1,0 +1,23 @@
+{
+  "description": "Everyday language and small talk; typhoid only SUSPECTED, so it must not be coded",
+  "codes_required": [
+    "R50.9"
+  ],
+  "codes_forbidden": [
+    "A01.0",
+    "B34.9"
+  ],
+  "bill_services": [
+    "CONS-NEW"
+  ],
+  "bill_total": 1500,
+  "medicines": [
+    "paracetamol"
+  ],
+  "allergies": [],
+  "tests_ordered": [
+    "cbc",
+    "typhidot"
+  ],
+  "visit_type": "new"
+}

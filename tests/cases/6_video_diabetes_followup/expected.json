@@ -1,0 +1,19 @@
+{
+  "description": "Video: diabetes follow-up with reports; small talk; HbA1c ordered for later is not billed",
+  "codes_required": [
+    "E11.9|E14.9"
+  ],
+  "codes_forbidden": [],
+  "bill_services": [
+    "CONS-FU"
+  ],
+  "bill_total": 800,
+  "medicines": [
+    "metformin"
+  ],
+  "allergies": [],
+  "tests_ordered": [
+    "hba1c"
+  ],
+  "visit_type": "follow_up"
+}

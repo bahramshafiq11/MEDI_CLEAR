@@ -1,0 +1,7 @@
+case,passed,total,score,word_acc,t_transcribe,t_speakers,t_extract,time,language,error
+1_text_htn_dm,8,11,73,,,16.8,208.3,225.1,,
+2_text_suspected_typhoid,9,10,90,,,14.2,165.2,179.4,,
+3_text_wound_procedures,6,7,86,,,0.0,106.8,106.8,,
+4_audio_asthma,2,7,29,85.6,12.4,14.7,150.8,177.8,English,
+5_audio_urine_infection,5,6,83,94.8,8.8,13.5,114.1,136.5,English,
+6_video_diabetes_followup,7,7,100,79.0,9.1,14.5,95.9,119.4,English,

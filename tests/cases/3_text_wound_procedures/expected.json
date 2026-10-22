@@ -1,0 +1,21 @@
+{
+  "description": "Cut hand: tetanus injection, stitches and dressing done in clinic must be billed",
+  "codes_required": [
+    "S61.9|T14.1"
+  ],
+  "codes_forbidden": [],
+  "bill_services": [
+    "CONS-NEW",
+    "PROC-INJ",
+    "PROC-SUT",
+    "PROC-DRS"
+  ],
+  "bill_total": 5000,
+  "medicines": [
+    "cefalexin",
+    "paracetamol"
+  ],
+  "allergies": [],
+  "tests_ordered": [],
+  "visit_type": "new"
+}

@@ -1,0 +1,16 @@
+What was said in the recording (use this to check MediClear's transcript):
+
+Doctor: Hello, come in. You look a bit out of breath. What's going on?
+Patient: Since last night my chest feels very tight, and I can't breathe properly. There's a whistling sound when I breathe out.
+Doctor: Are you a known asthmatic?
+Patient: Yes, I have had asthma since childhood. I ran out of my blue inhaler last week.
+Doctor: Any fever or cough?
+Patient: A dry cough, especially at night. No fever.
+Doctor: Okay, let me listen to your chest. There is wheezing on both sides. Your oxygen level is ninety three percent, and your breathing rate is twenty four.
+Patient: Is it serious?
+Doctor: This is an acute asthma attack. I am going to give you a nebulization right now here in the clinic with salbutamol.
+Patient: Okay.
+Doctor: Good, after the nebulization your oxygen is ninety seven percent and the wheeze is much better.
+Doctor: I am prescribing a salbutamol inhaler, two puffs when needed, and prednisolone forty milligrams once a day for five days. Never let your inhaler run out again.
+Doctor: If your breathing gets worse or your lips turn blue, go to the emergency straight away. Come back for a follow up in one week.
+Patient: Thank you, doctor.
