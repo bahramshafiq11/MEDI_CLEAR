@@ -15,7 +15,12 @@ import time
 from . import billing, checks, coding, extract, llm, medicines, notes, simplify
 
 
-def run(transcript_text: str | None = None, file_path: str | None = None, label_speakers: bool = True) -> dict:
+def run(transcript_text: str | None = None, file_path: str | None = None, label_speakers: bool = True,
+        spoken: str | None = None, text_from_language: str | None = None) -> dict:
+    """
+    spoken: the language the person picked ("en", "ur", ...) or None to detect it.
+    text_from_language: when transcript_text came from live subtitles translated from another language.
+    """
     timings = {}
     warnings = []  # notes for the doctor, shown at the top of the result
     t0 = time.time()
@@ -23,7 +28,7 @@ def run(transcript_text: str | None = None, file_path: str | None = None, label_
     # 1. Speech to text
     if file_path:
         from .transcribe import transcribe_file  # imported here so the app starts fast
-        tr = transcribe_file(file_path)
+        tr = transcribe_file(file_path, spoken=spoken)
         lines = [s["text"] for s in tr["segments"]]
         transcript = {"text": tr["text"], "language": tr["language"], "language_name": tr["language_name"],
                       "translated": tr["translated"], "segments": tr["segments"]}
@@ -33,6 +38,13 @@ def run(transcript_text: str | None = None, file_path: str | None = None, label_
     else:
         lines = extract.split_lines(transcript_text or "")
         transcript = {"text": "\n".join(lines), "language": None, "segments": []}
+        if text_from_language:
+            from .transcribe import language_name
+            transcript.update({"language": text_from_language, "language_name": language_name(text_from_language),
+                               "translated": text_from_language != "en"})
+            if text_from_language != "en":
+                warnings.append(f"The conversation was in {language_name(text_from_language)} and the live subtitles "
+                                "translated it to English. Check medicine names and numbers against the recording.")
 
     if not lines:
         raise ValueError("The transcript is empty. Nothing was heard in the recording, or no text was pasted.")

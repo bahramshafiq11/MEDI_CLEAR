@@ -24,6 +24,9 @@ async function api(path, options = {}) {
   return data;
 }
 function isApproved() { return current?.status === "approved"; }
+function setNav(which) {
+  $("btn-check").classList.toggle("active", which === "check");
+}
 
 // Highlight glossary terms inside plain text. Returns safe HTML.
 function highlight(text, hits) {
@@ -74,7 +77,10 @@ async function loadHistory() {
 function showNew() {
   current = null;
   $("view-result").classList.add("hidden");
+  $("view-check").classList.add("hidden");
   $("view-new").classList.remove("hidden");
+  window.resetConsultRecorder?.();
+  setNav("new");
   $("form-new").reset();
   $("drop-text").innerHTML = '<b>Choose a recording or video</b> or drag it here<br><small>mp3, wav, m4a, mp4, mov, webm… or a .txt transcript</small>';
   loadHistory();
@@ -105,13 +111,18 @@ $("form-new").addEventListener("submit", async (e) => {
   const err = $("new-error");
   err.classList.add("hidden");
   const fd = new FormData();
-  const f = $("file").files[0];
+  const recording = window.getConsultRecording?.();
+  const liveText = window.getConsultLive?.();
+  // English live recording: the subtitles are already the transcript, so skip transcribing again (faster).
+  const useSubtitles = recording && liveText?.language === "en" && $("transcript").value.trim();
+  const f = useSubtitles ? null : (recording || $("file").files[0]);  // a live recording wins over an uploaded file
   if (f) fd.append("file", f);
+  if (useSubtitles) fd.append("source", `Live recording (${recording.name})`);
   fd.append("transcript", $("transcript").value);
   fd.append("patient_name", $("patient-name").value);
   fd.append("label_speakers", $("label-speakers").checked);
   if (!f && !$("transcript").value.trim()) {
-    err.textContent = "Upload a recording or paste a transcript first."; err.classList.remove("hidden"); return;
+    err.textContent = "Record the conversation, upload a recording, or paste a transcript first."; err.classList.remove("hidden"); return;
   }
   $("form-new").classList.add("hidden");
   $("processing").classList.remove("hidden");
@@ -130,7 +141,9 @@ $("form-new").addEventListener("submit", async (e) => {
 function showResult(c) {
   current = c;
   $("view-new").classList.add("hidden");
+  $("view-check").classList.add("hidden");
   $("view-result").classList.remove("hidden");
+  setNav(null);
   $("r-name").value = c.patient_name || "";
   const tr = c.result.transcript || {};
   const lang = tr.language_name ? ` · ${tr.language_name}${tr.translated ? " → translated to English" : ""}` : "";

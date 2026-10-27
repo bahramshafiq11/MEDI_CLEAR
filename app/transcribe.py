@@ -5,6 +5,7 @@ The first time you run it, the Whisper model is downloaded once (internet needed
 after that it works offline.
 """
 import os
+import threading
 
 from . import config
 
@@ -13,14 +14,18 @@ os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
 
 SAMPLE_RATE = 16000  # Whisper expects 16 kHz mono audio
 _model = None  # loaded once, then reused
+# Only one transcription at a time (live subtitles and full recordings share the same model).
+MODEL_LOCK = threading.RLock()
 
 
 def _get_model():
     global _model
     if _model is None:
-        from faster_whisper import WhisperModel
-        # int8 on CPU works on any normal computer without a graphics card.
-        _model = WhisperModel(config.WHISPER_MODEL, device="cpu", compute_type="int8")
+        with MODEL_LOCK:
+            if _model is None:
+                from faster_whisper import WhisperModel
+                # int8 on CPU works on any normal computer without a graphics card.
+                _model = WhisperModel(config.WHISPER_MODEL, device="cpu", compute_type="int8")
     return _model
 
 
@@ -91,6 +96,11 @@ def transcribe_file(path: str) -> dict:
        "translated": True/False, "warning": "" or a note for the reviewer}
     """
     audio = load_audio(path)
+    with MODEL_LOCK:
+        return _transcribe_audio(audio)
+
+
+def _transcribe_audio(audio) -> dict:
     model = _get_model()
 
     language = config.WHISPER_LANGUAGE
@@ -113,7 +123,7 @@ def transcribe_file(path: str) -> dict:
         language=language,
         beam_size=config.WHISPER_BEAM_SIZE,
         vad_filter=True,  # skips silence, makes it faster
-        initial_prompt=vocabulary_hint(),
+        initial_prompt=vocabulary_hint() if language in (None, "en") else None,
     )
     out = []
     for s in segments:

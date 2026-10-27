@@ -85,6 +85,36 @@ The three samples show different situations:
 
 **Audio and video:** upload an mp3, wav, m4a, mp4, mov, webm, etc. The **first** upload downloads the Whisper speech model (about 500 MB) once. After that it works offline. The recording is deleted after it's turned into text.
 
+### Voice features
+
+**Record a consultation live:** on the *New consultation* page, click the round microphone button, talk, and click it
+again to stop. You can listen to the recording before pressing *Process consultation*. The first time, the browser asks
+for microphone permission; click **Allow**.
+
+**Live subtitles:** while you speak, your words appear in a black box under the microphone, in the language you speak
+(grey words may still change). They are made on your own computer by Whisper, so nothing leaves the PC.
+For English recordings, the subtitles are reused as the transcript, so processing skips transcribing again (faster).
+
+**Symptom check (for patients):** click *Symptom check (patient)* in the sidebar. The patient presses the microphone and
+describes the problem in their own words, in **any language**, or types it. The app shows:
+- **How urgent it is:** emergency / see a doctor today / see a doctor in a few days / look after it at home
+- **Danger signs** found in what they said (chest pain, trouble breathing, stroke signs, heavy bleeding, fainting, …)
+- **What it might be** (1–4 possibilities with ICD-10 codes), what to do now, when to get help sooner, and which doctor to see
+- **Start a consultation with this:** sends what the patient said to a new consultation for the doctor
+- **Automatic answer:** with *Check automatically when I stop recording* ticked, the result appears as soon as you stop
+- **Spoken answer:** with *Read the answer out loud* ticked, the result is read aloud (computer's built-in voice).
+  Use the *Read aloud* button to hear it again.
+
+How it stays safe:
+- Danger signs are found by **fixed rules** (`data/red_flags.json`), not by the AI, so they can't be missed.
+  The AI can make the urgency *higher* but **never lower** than the rules. If the AI is offline, danger signs still show.
+- "No chest pain" is not treated as chest pain (simple negation handling).
+- It never gives a diagnosis, prescription or medicine dose. Any advice line containing a dose is removed.
+- Symptom checks are **not saved**, and recordings are deleted as soon as they're turned into text.
+
+> The microphone works on `http://localhost:8000`. When the app is put on a website, the address must be `https://`,
+> because browsers only allow the microphone on secure sites.
+
 ---
 
 ## 4. Settings
@@ -106,6 +136,8 @@ Data you can edit (in the `data` folder, open with Excel or Notepad):
 - `glossary.json`: medical words and their plain meanings
 - `medicines.txt`: real drug names, used to fix names that speech-to-text misheard
 - `whisper_vocabulary.txt`: medical words Whisper should expect while listening
+- `red_flags.json`: danger signs for the symptom check (add your own patterns)
+- `samples_patient/`: example patient descriptions for the symptom check
 - `samples/`: add your own mock conversations as `.txt` files
 
 ---
@@ -123,12 +155,14 @@ mediclear/
 │   ├── notes.py       SOAP note + patient summary from the extracted facts (no AI, instant)
 │   ├── medicines.py   Fixes misheard drug names ("pridness alone" → prednisolone)
 │   ├── checks.py      Hallucination check: flags medicines/diagnoses not found in the conversation
+│   ├── symptom_check.py  Patient symptom check: possible issues, urgency, danger-sign rules
+│   ├── live.py        Live subtitles: turns speech into text while you talk
 │   ├── simplify.py    Medical words → plain language (glossary, medicine timings)
 │   ├── coding.py      Diagnoses/symptoms → ICD-10 codes
 │   ├── billing.py     Services performed → draft bill
 │   ├── database.py    Saves consultations (SQLite file: data/mediclear.db)
 │   └── config.py      Settings
-├── static/            The web page (HTML, CSS, JavaScript)
+├── static/            The web page (HTML, CSS, JavaScript; voice.js = microphone + symptom check)
 ├── data/              Code list, fee schedule, glossary, sample conversations
 ├── tests/cases/       Test cases with correct answers (used by evaluate.py)
 ├── evaluate.py        Runs all test cases and scores the results

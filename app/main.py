@@ -4,17 +4,19 @@ The web server. Start it with:
 then open http://localhost:8000 in your browser.
 API documentation is automatically available at http://localhost:8000/docs
 """
+import re
 import shutil
 import traceback
 import uuid
 from pathlib import Path
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from . import billing, config, database, pipeline
+from . import billing, config, database, live, pipeline, symptom_check
 from .llm import LLMError, ollama_status
 
 app = FastAPI(title="MediClear", description="Doctor-patient conversations to notes, codes and bills")
@@ -42,30 +44,94 @@ def samples():
             for p in sorted(folder.glob("*.txt"))]
 
 
+@app.get("/api/samples/patient")
+def patient_samples():
+    folder = config.DATA_DIR / "samples_patient"
+    return [{"name": p.stem.split("_", 1)[-1].replace("_", " "), "text": p.read_text(encoding="utf-8").strip()}
+            for p in sorted(folder.glob("*.txt"))]
+
+
+def save_upload(file: UploadFile | None) -> tuple[Path | None, str | None]:
+    """Save an uploaded recording to disk. Returns (path to the audio, text if it was a .txt file)."""
+    if file is None or not file.filename:
+        return None, None
+    suffix = Path(file.filename).suffix.lower()
+    if suffix not in ALLOWED:
+        raise HTTPException(400, f"File type {suffix} isn't supported.")
+    if suffix == ".txt":
+        return None, file.file.read().decode("utf-8", errors="ignore")
+    path = config.UPLOAD_DIR / f"{uuid.uuid4().hex}{suffix}"
+    with open(path, "wb") as out:
+        shutil.copyfileobj(file.file, out)
+    if path.stat().st_size < 1000:
+        path.unlink()
+        raise HTTPException(400, "The recording is empty or too short. Check that the microphone is working.")
+    return path, None
+
+
+@app.post("/api/live/{sid}")
+async def live_audio(sid: str, request: Request, final: bool = False):
+    """Live subtitles: the browser sends new microphone audio (16 kHz, 16-bit) every few seconds."""
+    if not re.fullmatch(r"[A-Za-z0-9-]{8,64}", sid):
+        raise HTTPException(400, "Bad session id")
+    data = await request.body()
+    if len(data) > 16000 * 2 * 120:
+        raise HTTPException(413, "Send audio in smaller pieces (at most 2 minutes at a time).")
+    try:
+        return await run_in_threadpool(live.add_audio, sid, data, final)
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(500, f"Live subtitles failed: {type(e).__name__}: {e}")
+
+
+@app.delete("/api/live/{sid}")
+def live_discard(sid: str):
+    live.discard(sid)
+    return {"discarded": sid}
+
+
+@app.post("/api/symptom-check")
+def symptom_check_endpoint(file: UploadFile | None = File(None), text: str = Form(""), language: str = Form("")):
+    """A patient describes their problem by voice or text; returns possible issues and how urgent it is."""
+    saved_path = None
+    try:
+        saved_path, file_text = save_upload(file)
+        if file_text is not None:
+            text = file_text
+        if saved_path is None and not text.strip():
+            raise HTTPException(400, "Record your voice or type your symptoms first.")
+        return symptom_check.run(text=text if saved_path is None else None,
+                                 file_path=str(saved_path) if saved_path else None,
+                                 language=language or None)
+    except LLMError as e:
+        raise HTTPException(503, str(e))
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    except HTTPException:
+        raise
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(500, f"Unexpected error: {type(e).__name__}: {e}. Full details are in the PowerShell window.")
+    finally:
+        if saved_path and saved_path.exists():
+            saved_path.unlink()  # privacy: the recording is deleted once it has been turned into text
+
+
 @app.post("/api/process")
 def process(
     file: UploadFile | None = File(None),
     transcript: str = Form(""),
     patient_name: str = Form(""),
     label_speakers: bool = Form(True),
+    source: str = Form(""),
 ):
     """Upload a recording/video (or paste a transcript) and run the full pipeline."""
     saved_path = None
     try:
-        if file is not None and file.filename:
-            suffix = Path(file.filename).suffix.lower()
-            if suffix not in ALLOWED:
-                raise HTTPException(400, f"File type {suffix} isn't supported.")
-            if suffix == ".txt":
-                transcript = file.file.read().decode("utf-8", errors="ignore")
-                source = file.filename
-            else:
-                saved_path = config.UPLOAD_DIR / f"{uuid.uuid4().hex}{suffix}"
-                with open(saved_path, "wb") as out:
-                    shutil.copyfileobj(file.file, out)
-                source = file.filename
-        else:
-            source = "Pasted transcript"
+        saved_path, file_text = save_upload(file)
+        if file_text is not None:
+            transcript = file_text
+        source = file.filename if file is not None and file.filename else (source.strip() or "Pasted transcript")
 
         if saved_path is None and not transcript.strip():
             raise HTTPException(400, "Upload a recording or paste a transcript first.")

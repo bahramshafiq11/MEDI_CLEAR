@@ -15,6 +15,7 @@
   <div class="layout">
     <aside class="sidebar">
       <button id="btn-new" class="btn primary block">+ New consultation</button>
+      <button id="btn-check" class="btn block nav-btn">Symptom check (patient)</button>
       <h3>History</h3>
       <ul id="history" class="history"></ul>
     </aside>
@@ -23,12 +24,32 @@
       <!-- ============ NEW CONSULTATION ============ -->
       <section id="view-new">
         <h1>New consultation</h1>
-        <p class="muted">Upload a recording or video of the consultation, or paste a transcript.</p>
+        <p class="muted">Record the consultation, upload a recording or video, or paste a transcript.</p>
 
         <form id="form-new" class="card">
           <label>Patient name (optional)
             <input id="patient-name" type="text" placeholder="e.g. Ali Khan">
           </label>
+
+          <div class="recorder" id="rec-consult">
+            <button type="button" class="mic-btn" data-role="toggle" aria-label="Start recording"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2Z"/></svg></button>
+            <div class="rec-info">
+              <b data-role="label">Record the consultation</b>
+              <small data-role="hint">Click the microphone, then talk normally. Click again to stop.</small>
+              <div class="level"><span data-role="level"></span></div>
+            </div>
+            <span class="rec-time" data-role="time"></span>
+          </div>
+          <div class="captions hidden" id="rec-consult-captions" aria-live="polite">
+            <div class="cap-head"><span>Live subtitles</span><span data-role="lang"></span></div>
+            <div class="cap-text" data-role="captext"></div>
+          </div>
+          <div class="rec-ready hidden" id="rec-consult-ready">
+            <audio controls data-role="audio"></audio>
+            <button type="button" class="btn" data-role="discard">Discard</button>
+          </div>
+
+          <div class="or">or upload a file</div>
 
           <label class="drop" id="drop">
             <input id="file" type="file" accept="audio/*,video/*,.txt">
@@ -57,6 +78,57 @@
               On a local AI model this can take 1–3 minutes.</p>
           </div>
         </div>
+      </section>
+
+      <!-- ============ SYMPTOM CHECK ============ -->
+      <section id="view-check" class="hidden">
+        <h1>Symptom check</h1>
+        <p class="muted">Tell us what's wrong in your own words. You can speak in any language.</p>
+        <div class="notice">This gives suggestions, not a diagnosis. <b>In an emergency, call your local emergency number now.</b></div>
+
+        <form id="form-check" class="card">
+          <div class="recorder" id="rec-check">
+            <button type="button" class="mic-btn" data-role="toggle" aria-label="Start recording"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2Z"/></svg></button>
+            <div class="rec-info">
+              <b data-role="label">Tap the microphone and tell us what's wrong</b>
+              <small data-role="hint">Say what you feel, since when, how bad it is, and your age.</small>
+              <div class="level"><span data-role="level"></span></div>
+            </div>
+            <span class="rec-time" data-role="time"></span>
+          </div>
+          <div class="captions hidden" id="rec-check-captions" aria-live="polite">
+            <div class="cap-head"><span>Live subtitles</span><span data-role="lang"></span></div>
+            <div class="cap-text" data-role="captext"></div>
+          </div>
+          <div class="rec-ready hidden" id="rec-check-ready">
+            <audio controls data-role="audio"></audio>
+            <button type="button" class="btn" data-role="discard">Discard</button>
+          </div>
+
+          <div class="check-options">
+            <label class="check"><input id="check-auto" type="checkbox" checked> Check automatically when I stop recording</label>
+            <label class="check"><input id="check-speak" type="checkbox" checked> Read the answer out loud</label>
+          </div>
+
+          <div class="or">or type it</div>
+          <div class="row">
+            <select id="check-sample"><option value="">Try an example…</option></select>
+          </div>
+          <textarea id="check-text" rows="4" placeholder="e.g. I've had a fever and a headache for three days, and my body aches. I'm 30."></textarea>
+          <label class="upload-link">Or upload a voice recording <input id="check-file" type="file" accept="audio/*,video/*"></label>
+          <span id="check-file-name" class="muted"></span>
+
+          <button class="btn primary big" type="submit">Check my symptoms</button>
+          <p id="check-error" class="error hidden"></p>
+        </form>
+
+        <div id="check-processing" class="card processing hidden">
+          <div class="spinner"></div>
+          <div><b>Listening and thinking…</b>
+            <p class="muted">Turning your voice into text and looking at your symptoms. This can take a minute on a local AI model.</p></div>
+        </div>
+
+        <div id="check-result" class="hidden"></div>
       </section>
 
       <!-- ============ RESULT ============ -->
@@ -101,5 +173,6 @@
   <div id="print-area"></div>
 
   <script src="/static/app.js"></script>
+  <script src="/static/voice.js"></script>
 </body>
 </html>

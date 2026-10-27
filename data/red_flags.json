@@ -1,0 +1,103 @@
+{
+  "_note": "Danger signs checked by fixed rules (not AI), so the AI can never miss or downgrade them. 'patterns' are regular expressions matched against what the patient said. Urgency: emergency > urgent_today > see_doctor_soon > self_care.",
+  "rules": [
+    {
+      "id": "chest_pain",
+      "name": "Chest pain or pressure",
+      "urgency": "emergency",
+      "patterns": ["chest pain", "pain in (my |the )?chest", "chest (is |feels )?(tight|heavy|pressure|squeez)", "(tightness|pressure|heaviness) in (my |the )?chest", "heart attack"],
+      "message": "Chest pain or pressure can be a heart attack. Call an ambulance or go to the emergency department now."
+    },
+    {
+      "id": "breathing",
+      "name": "Trouble breathing",
+      "urgency": "emergency",
+      "patterns": ["can'?t breathe", "cannot breathe", "can not breathe", "(difficulty|trouble|problem) breathing", "hard to breathe", "short(ness)? of breath", "breathless", "gasping", "choking", "lips (are |look |turning |turned )?(blue|grey|gray)"],
+      "message": "Serious trouble breathing needs help straight away. Go to the emergency department now."
+    },
+    {
+      "id": "stroke",
+      "name": "Possible stroke signs",
+      "urgency": "emergency",
+      "patterns": ["face (is |has )?(droop|drooping|dropped|fallen)", "slurred speech", "speech is slurred", "can'?t (speak|talk) properly", "can'?t (move|feel|lift) (my )?(arm|leg|hand|face)", "one side of (my |the )?(body|face)", "sudden(ly)? (weak|weakness|numb|numbness)"],
+      "message": "Sudden weakness, a drooping face or slurred speech can be a stroke. Call an ambulance now; every minute matters."
+    },
+    {
+      "id": "bleeding",
+      "name": "Serious bleeding",
+      "urgency": "emergency",
+      "patterns": ["bleeding (a lot|heavily|badly|won'?t stop|will not stop|does not stop|doesn'?t stop)", "(vomiting|throwing up|coughing( up)?) blood", "blood in (my )?(vomit|sick)", "black (stool|stools|poo|poop)"],
+      "message": "Heavy bleeding, or blood in vomit or black stools, needs urgent care. Go to the emergency department now."
+    },
+    {
+      "id": "collapse",
+      "name": "Fainting, fits or unconsciousness",
+      "urgency": "emergency",
+      "patterns": ["fainted", "passed out", "unconscious", "blacked out", "seizure", "convulsion", "\\b(had|having|has|have|gets?|getting|got) (a )?fits?\\b(?! of)", "won'?t wake up"],
+      "message": "Fainting, a fit or not waking up properly needs emergency care now."
+    },
+    {
+      "id": "allergy",
+      "name": "Severe allergic reaction",
+      "urgency": "emergency",
+      "patterns": ["throat (is )?(closing|swelling|swollen)", "swollen (lips|tongue|face)", "(lips|tongue|face) (is |are )?swollen", "anaphyla"],
+      "message": "Swelling of the face, lips or throat can be a severe allergic reaction. Get emergency help now."
+    },
+    {
+      "id": "self_harm",
+      "name": "Thoughts of self-harm",
+      "urgency": "emergency",
+      "patterns": ["kill myself", "suicid", "end my life", "don'?t want to (live|be alive)", "self[- ]?harm", "hurt(ing)? myself", "better off dead"],
+      "message": "You deserve support right now. Please talk to someone today: call your local emergency number or a crisis helpline, go to the nearest emergency department, or tell someone you trust."
+    },
+    {
+      "id": "severe_headache",
+      "name": "Sudden severe headache",
+      "urgency": "emergency",
+      "patterns": ["worst headache", "sudden(ly)? (very )?(severe|bad|terrible) headache", "headache (came|started) (on )?(very )?sudden"],
+      "message": "A sudden, very severe headache needs to be checked straight away. Go to the emergency department."
+    },
+    {
+      "id": "pregnancy_bleeding",
+      "name": "Bleeding or pain in pregnancy",
+      "urgency": "emergency",
+      "patterns": ["pregnan[^.]{0,60}(bleed|severe pain)", "(bleed|severe pain)[^.]{0,60}pregnan"],
+      "message": "Bleeding or severe pain during pregnancy needs urgent care. Go to the emergency department or maternity unit now."
+    },
+    {
+      "id": "stiff_neck",
+      "name": "Stiff neck with fever",
+      "urgency": "urgent_today",
+      "patterns": ["stiff neck", "neck (is )?stiff", "can'?t bend my neck"],
+      "message": "A stiff neck, especially with fever or headache, should be checked by a doctor today."
+    },
+    {
+      "id": "baby_fever",
+      "name": "Fever in a baby",
+      "urgency": "urgent_today",
+      "patterns": ["(baby|infant|newborn)[^.]{0,60}(fever|temperature|hot)", "(fever|temperature)[^.]{0,60}(baby|infant|newborn)"],
+      "message": "A fever in a baby should be checked by a doctor today. If the baby is under 3 months old, go now."
+    },
+    {
+      "id": "severe_abdominal",
+      "name": "Severe stomach pain",
+      "urgency": "urgent_today",
+      "patterns": ["(severe|very bad|terrible|unbearable) (stomach|abdominal|belly|tummy) pain", "(stomach|abdominal|belly|tummy) pain (is )?(severe|very bad|terrible|unbearable)"],
+      "message": "Severe stomach pain should be checked by a doctor today."
+    },
+    {
+      "id": "dehydration",
+      "name": "Signs of dehydration",
+      "urgency": "urgent_today",
+      "patterns": ["not (passing|passed) (any )?urine", "haven'?t (passed urine|peed)", "can'?t keep (anything|water|fluids|food) down", "vomiting everything"],
+      "message": "Not keeping fluids down or not passing urine can mean dehydration. See a doctor today."
+    },
+    {
+      "id": "high_fever",
+      "name": "Very high fever",
+      "urgency": "urgent_today",
+      "patterns": ["(10[4-9]|11\\d)(\\.\\d)? ?(degrees|°|f\\b)", "\\b(40|41|42)(\\.\\d)? ?(degrees|°|c\\b)"],
+      "message": "A very high fever should be checked by a doctor today."
+    }
+  ]
+}
